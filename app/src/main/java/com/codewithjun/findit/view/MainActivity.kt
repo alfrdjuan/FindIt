@@ -42,6 +42,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             if (placeID != null) {
                 getPlaceDetails(placeID)
             }
+        } else {
+            requestLocationUpdates()
         }
     }
 
@@ -49,9 +51,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
 
         mMap.clear()
-
-        //run when the map is ready (including when the user is back from another activity
-        requestLocationUpdates()
 
         //set new marker
         mMap.setOnMapClickListener {
