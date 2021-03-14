@@ -1,6 +1,6 @@
 package com.codewithjun.findit.network.model
 
-data class PlaceX(
+data class GeocodeResult(
     val plus_code: PlusCode,
     val results: List<Result>,
     val status: String

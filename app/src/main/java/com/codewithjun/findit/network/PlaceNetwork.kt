@@ -1,39 +1,40 @@
 package com.codewithjun.findit.network
 
-import com.codewithjun.findit.network.model.Result
+import com.codewithjun.findit.network.model.AutocompleteResult
+import com.codewithjun.findit.network.model.GeocodeResult
+import com.codewithjun.findit.network.model.PlaceDetailsResult
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-const val BASE_URL = "https://maps.googleapis.com/maps"
+const val BASE_URL = "https://maps.googleapis.com/maps/"
 
 interface PlaceNetwork {
 
-    @GET("/api/place/details/json")
-    fun getAutoCompleteResult(
+    @GET("api/geocode/json?")
+    fun getGeocodeResult(
         @Query("latlng") latlng: String?,
         @Query("language") language: String?,
         @Query("region") region: String?,
         @Query("key") key: String?,
-        @Query("input") input: String?
-    ): Call<List<Result>>
+    ): Call<GeocodeResult>
 
-    @GET("/maps/api/place/autocomplete/json")
-    fun getGeocodeResult(
-        @Query("components") components: String?,
+    @GET("api/place/autocomplete/json?")
+    fun getAutocompleteResult(
         @Query("input") input: String?,
+        @Query("sessiontoken") sessionToken: String?,
         @Query("radius") radius: Int?,
         @Query("language") language: String?,
-        @Query("sessiontoken") sessionToken: String?,
+        @Query("components") components: String?,
         @Query("key") key: String?
-    ): Call<List<Result>>
+    ): Call<AutocompleteResult>
 
-    @GET("maps/api/place/details/json")
-    fun getPlaceDetails(
+    @GET("api/place/details/json?")
+    fun getPlaceDetailsResult(
         @Query("place_id") placeID: String?,
         @Query("language") language: String?,
         @Query("region") region: String?,
-        @Query("fields") fields: Int?,
+        @Query("fields") fields: String?,
         @Query("key") key: String?
-    ): Call<List<Result>>
+    ): Call<PlaceDetailsResult>
 }

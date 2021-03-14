@@ -1,10 +1,11 @@
 package com.codewithjun.findit.repository
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.codewithjun.findit.network.BASE_URL
 import com.codewithjun.findit.network.PlaceNetwork
-import com.codewithjun.findit.network.model.Result
+import com.codewithjun.findit.network.model.AutocompleteResult
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,15 +16,21 @@ import retrofit2.converter.gson.GsonConverterFactory
 class SearchActivityRepository(val application: Application) {
 
     val showProgress = MutableLiveData<Boolean>()
-    val resultList = MutableLiveData<List<Result>>()
-
+    val autocompleteResult = MutableLiveData<AutocompleteResult>()
 
     fun changeState() {
         showProgress.value = !(showProgress.value != null && showProgress.value!!)
     }
 
 
-    fun searchPlace(latlng: String, language: String, region: String, key: String, input: String) {
+    fun getAutocompleteResult(
+        language: String,
+        radius: Int,
+        key: String,
+        input: String,
+        components: String,
+        sessiontoken: String
+    ) {
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -31,17 +38,18 @@ class SearchActivityRepository(val application: Application) {
 
         val service: PlaceNetwork = retrofit.create(PlaceNetwork::class.java)
 
-
-        service.getAutoCompleteResult(latlng, language, region, key, input)
-            .enqueue(object : Callback<List<Result>> {
+        service.getAutocompleteResult(input, sessiontoken, radius, language, components, key)
+            .enqueue(object : Callback<AutocompleteResult> {
                 override fun onResponse(
-                    call: Call<List<Result>>,
-                    response: Response<List<Result>>
+                    call: Call<AutocompleteResult>,
+                    response: Response<AutocompleteResult>
                 ) {
-                    resultList.value = response.body()
+                    autocompleteResult.value = response.body()
+                    Log.d("Search", "onResponse:${response.body()}")
+                    Log.d("Search", "autocomplete value:${autocompleteResult.value}")
                 }
 
-                override fun onFailure(call: Call<List<Result>>, t: Throwable) {
+                override fun onFailure(call: Call<AutocompleteResult>, t: Throwable) {
                     TODO("Not yet implemented")
                 }
 
@@ -49,4 +57,6 @@ class SearchActivityRepository(val application: Application) {
 
             )
     }
+
+
 }

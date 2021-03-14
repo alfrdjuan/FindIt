@@ -1,6 +1,6 @@
 package com.codewithjun.findit.network.model
 
 data class Viewport(
-    val northeast: NortheastX,
-    val southwest: SouthwestX
+    val northeast: Northeast,
+    val southwest: Southwest
 )

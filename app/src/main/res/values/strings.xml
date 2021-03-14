@@ -1,4 +1,19 @@
 <resources>
     <string name="app_name">FindIt</string>
     <string name="title_activity_maps">Map</string>
+    <string name="creator_word">
+        CodeWithJun here! This is an application that you requested, an application that can get place data and place suggestion.
+
+
+    </string>
+    <string name="creator_word_2">
+                Please note that this application using <b>Google Maps APIs</b>  (3 apis that you request to use) and it is quite pricey. You can test the application however you want, but please do it wisely (since I already use nearly half of the free credits for university project).
+
+    </string>
+    <string name="creator_word_3">
+                If you have any question or stuff, you can find my contact at <b>alfrdjuan.com</b> Thank you and looking forward to work with you!
+    </string>
+    <string name="permission_text">
+        To continue using the application, the application need Location access. Please grant them before continuing.
+    </string>
 </resources>
